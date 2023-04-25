@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spring-boot-hello-world
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: spring-boot-hello-world
+  template:
+    metadata:
+      labels:
+        app: spring-boot-hello-world
+    spec:
+      containers:
+      - name: spring-boot-hello-world
+        image: zuneha/hello-world-spring-boot:latest
+        ports:
+        - containerPort: 8080
+          name: http
+        env:
+        - name: SPRING_PROFILES_ACTIVE
+          value: "prod"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: spring-boot-hello-world
+spec:
+  selector:
+    app: spring-boot-hello-world
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+  type: LoadBalancer
