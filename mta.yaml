@@ -1,0 +1,34 @@
+_schema-version: '3.1'
+ID: com.testing.spring-boot-hello-world
+version: 1.0.0
+description: Spring Boot Hello World
+
+parameters:
+  enable-parallel-deployments: true
+
+modules:
+  - name: spring-boot-hello-world
+    type: java
+    path: .
+    provides:
+      - name: spring-boot-hello-world-url
+        properties:
+          url: '${default-url}'
+    build-parameters:
+      builder: maven
+
+resources:
+  - name: spring-boot-hello-world-fiori
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: portal
+      service-plan: standard
+      config:
+        displayName: Spring Boot Hello World Fiori
+        siteId: spring-boot-hello-world
+
+  - name: spring-boot-hello-world-space
+    type: org.cloudfoundry.space
+    parameters:
+      org: e876ebd7trial
+      space: dev
