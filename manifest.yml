@@ -1,0 +1,9 @@
+applications:
+- name: hello_world
+  memory: 1G
+  instances: 1
+  buildpacks:
+  - java_buildpack
+  path: target/hello_world.jar
+  env:
+    SPRING_PROFILES_ACTIVE: production
