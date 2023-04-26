@@ -47,8 +47,6 @@ jobs:
         sudo mv kyma /usr/local/bin
 
     - name: Deploy to Kyma
-  run: |
-    kubectl create namespace hello || true
-    kubectl apply -n hello -f deployment.yml --kubeconfig .github/workflows/kubeconfig.yaml
-
-        kubectl apply -n hello -f deployment.yml
+      run: |
+        kubectl create namespace hello || true
+        kubectl apply -n hello -f deployment.yml --kubeconfig .github/workflows/kubeconfig.yaml
