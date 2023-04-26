@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: spring-boot-hello-world
+  echo"$function"
 spec:
   replicas: 1
   selector:
@@ -15,14 +16,16 @@ spec:
       containers:
       - name: spring-boot-hello-world
         image: zuneha/hello-world-spring-boot:latest
+        echo"$image"
         ports:
         - containerPort: 8080
           name: http
         env:
         - name: SPRING_PROFILES_ACTIVE
-          value: "prod"
+          value: "pprod"
 
 ---
+echo "$service"
 apiVersion: v1
 kind: Service
 metadata:
