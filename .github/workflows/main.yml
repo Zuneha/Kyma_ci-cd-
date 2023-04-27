@@ -51,20 +51,21 @@ jobs:
           tar zxvf "${KREW}.tar.gz" &&
           ./"${KREW}" install krew
         )
-
     - name: Install kubelogin plugin
       run: |
         export PATH="${PATH}:${HOME}/.krew/bin"
         kubectl krew install oidc-login
-
     - name: Install Kyma CLI
       run: |
         curl -Lo kyma https://storage.googleapis.com/kyma-cli-stable/kyma-darwin
         chmod +x kyma
         sudo mv kyma /usr/local/bin
-
     - name: Deploy to Kyma
+      env:
+        KUBECONFIG_CONTENT: ${{ secrets.KUBECONFIG_SERVICE }}
       run: |
+        echo "$KUBECONFIG_CONTENT" > kubeconfig.yaml
+        export KUBECONFIG=kubeconfig.yaml
         export PATH="${PATH}:${HOME}/.krew/bin"
         kubectl create namespace hello || true
-        kubectl apply -n hello -f deployment.yml --kubeconfig .github/workflows/kubeconfig.yaml
+        kubectl apply -n hello -f deployment.yml
